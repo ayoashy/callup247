@@ -12,7 +12,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'CallUp247',
       theme: ThemeData(
-        // scaffoldBackgroundColor: Colors.lightBlue[200],
         scaffoldBackgroundColor: Colors.lightBlueAccent,
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.transparent,

@@ -21,60 +21,70 @@ class ServiceProviderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(color: Colors.black),
-          gradient: LinearGradient(
-            begin: Alignment.bottomRight,
-            end: Alignment.topLeft,
-            colors: [Colors.blue.shade300, Colors.blue.shade700],
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(name,
-                      style:
-                          responsiveTextStyle(context, 18, Colors.white, null)),
-                  Icon(
-                    Icons.circle,
-                    color: isOnline ? Colors.green : Colors.black,
-                    size: 12,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 2),
-              Text(bio,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: responsiveTextStyle(context, 14, Colors.white, null)),
-              const SizedBox(height: 2),
-              Image.asset(image),
-              const SizedBox(height: 2),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    onPressed: onPressedButton1,
-                    child: const Text('View Profile'),
-                  ),
-                  ElevatedButton(
-                    onPressed: onPressedButton2,
-                    child: const Text('Contact'),
-                  ),
-                ],
-              ),
-            ],
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(color: Colors.black, width: 2),
+        gradient: LinearGradient(
+          begin: Alignment.bottomRight,
+          end: Alignment.topLeft,
+          colors: [Colors.blue.shade300, Colors.blue.shade700],
         ),
       ),
-    ]);
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(name,
+                    style:
+                        responsiveTextStyle(context, 18, Colors.white, null)),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.circle,
+                      color: isOnline ? Colors.green : Colors.black,
+                      size: 12,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 2),
+            Center(
+              child: Image.asset(
+                image,
+              ),
+            ),
+            const SizedBox(height: 2),
+            Text(bio,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: responsiveTextStyle(context, 14, Colors.white, null)),
+            const SizedBox(height: 2),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepOrangeAccent),
+                  onPressed: onPressedButton1,
+                  child: const Text('View Profile'),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepOrangeAccent),
+                  onPressed: onPressedButton2,
+                  child: const Text('Contact'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
