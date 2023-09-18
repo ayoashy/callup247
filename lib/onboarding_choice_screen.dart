@@ -11,7 +11,9 @@ class OnboardingChoiceScreen extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(32.0),
+          padding: EdgeInsets.symmetric(
+              horizontal: 32.0,
+              vertical: MediaQuery.of(context).size.height * 0.15),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,18 +23,32 @@ class OnboardingChoiceScreen extends StatelessWidget {
                 style: responsiveTextStyle(context, 28, null, null),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.025),
-              const GradientContainer(
-                imagePath: 'assets/customer_icon.png',
-                text:
-                    'find and access a wide range of services, from home repairs to beauty treatments',
-                title: 'Customer',
+              InkWell(
+                onTap: () {
+                  Future.delayed(const Duration(milliseconds: 300), () {
+                    print('object');
+                  });
+                },
+                radius: 350,
+                splashColor: Colors.greenAccent,
+                child: const GradientContainer(
+                  imagePath: 'assets/customer_icon.png',
+                  text:
+                      'find and access a wide range of services, from home repairs to beauty treatments',
+                  title: 'Customer',
+                ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.025),
-              const GradientContainer(
-                  title: 'Service Provider',
-                  text:
-                      'showcase your skills, connect with local customers, manage your availability, and grow your business',
-                  imagePath: 'assets/service_provider.png'),
+              InkWell(
+                onTap: () {},
+                splashColor: Colors.greenAccent,
+                radius: 50,
+                child: const GradientContainer(
+                    title: 'Service Provider',
+                    text:
+                        'showcase your skills, connect with local customers, manage your availability, and grow your business',
+                    imagePath: 'assets/service_provider.png'),
+              ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.05),
               InkWell(
                 splashColor: Colors.greenAccent,
