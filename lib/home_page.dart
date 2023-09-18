@@ -1,3 +1,4 @@
+import 'package:callup247/profile_page.dart';
 import 'package:flutter/material.dart';
 
 import 'responsive_text_styles.dart';
@@ -15,6 +16,8 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _controller = TextEditingController();
   List<String> filteredServices = []; // Initialize it as an empty list
   bool isTyping = false; // Initially, the user is not typing
+  bool isSearching = false; // Initially the user is not searching
+  String searchchoice = '';
   List<String> servicesList = [
     'Accountant',
     'Accounts Clerk',
@@ -473,14 +476,19 @@ class _HomePageState extends State<HomePage> {
                               splashColor: Colors.greenAccent,
                               onTap: () {
                                 FocusScope.of(context).unfocus();
-                                // _controller.clear();
-                                // setState(() {
-                                //   filteredServices = [];
-                                // });
+                                setState(() {
+                                  isSearching = false;
+                                  // When suffix icon is tapped, set isTyping to false
+                                  isTyping = false;
+                                  // You can also clear the text field if needed
+                                  _controller.clear();
+                                  // Update the filtered services here as well
+                                  filteredServices = [];
+                                });
                               },
                               child: const Icon(
                                 Icons.cancel,
-                                color: Colors.black,
+                                color: Colors.black54,
                               )),
                           hintText: 'Search...',
                         ),
@@ -499,6 +507,7 @@ class _HomePageState extends State<HomePage> {
                               isTyping =
                                   false; // User has stopped typing, show the content above
                             }
+                            isSearching = false;
                           });
                         },
                       ),
@@ -521,91 +530,176 @@ class _HomePageState extends State<HomePage> {
                           ),
                           onTap: () {
                             // Handle user selection here.
+                            FocusScope.of(context).unfocus();
+                            setState(() {
+                              isSearching = true;
+                              // When tile is tapped, set isTyping to false
+                              isTyping = false;
+                              searchchoice = filteredServices[index];
+                              _controller.text = filteredServices[index];
+
+                              // Update the filtered services here as well
+                              filteredServices = [];
+                            });
                           },
                         );
                       },
                     ),
                   ),
                 ),
-                // Display service providers for the selected service here.
-                // ServiceProviderCard(
-                //   name: 'John Doe',
-                //   bio:
-                //       'Experienced plumber with 5+ years of experience in fixing pipes.',
-                //   image: 'assets/plumber.jpg',
-                //   onPressedButton1: () {
-                //     // Implement the action for Button 1 here.
-                //   },
-                //   onPressedButton2: () {
-                //     // Implement the action for Button 2 here.
-                //   },
-                //   isOnline:
-                //       true, // Set whether the service provider is online or offline.
-                // ),
-                // SizedBox(height: MediaQuery.of(context).size.height * 0.0125),
-                // ServiceProviderCard(
-                //   name: 'Senior Centy',
-                //   bio:
-                //       'Experienced barber with 5+ years of experience in cutting hair.',
-                //   image: 'assets/barber.jpg',
-                //   onPressedButton1: () {
-                //     // Implement the action for Button 1 here.
-                //   },
-                //   onPressedButton2: () {
-                //     // Implement the action for Button 2 here.
-                //   },
-                //   isOnline:
-                //       false, // Set whether the service provider is online or offline.
-                // ),
                 // saved searches
-                Visibility(
-                    visible: !isTyping, // Content is visible when not typing
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.15),
-                        Text(
-                          'Saved Searches',
-                          style: responsiveTextStyle(
-                              context, 20, null, FontWeight.bold),
+                Stack(children: [
+                  Visibility(
+                      visible: isSearching
+                          ? isTyping
+                          : !isTyping, // Content is visible when not typing
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.15),
+                          Text(
+                            'Saved Searches',
+                            style: responsiveTextStyle(
+                                context, 20, null, FontWeight.bold),
+                          ),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.0125),
+                          ServiceProviderCard(
+                            saved: true,
+                            name: 'John Doe',
+                            bio:
+                                'Experienced plumber with 5+ years of experience in fixing pipes.',
+                            image: 'assets/plumber.jpg',
+                            onPressedButton1: () {
+                              // Implement the action for Button 1 here.
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const ProfilePage(),
+                                ),
+                              );
+                            },
+
+                            isOnline:
+                                true, // Set whether the service provider is online or offline.
+                          ),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.0125),
+                          ServiceProviderCard(
+                            saved: true,
+                            name: 'Senior Centy',
+                            bio:
+                                'Experienced barber with 5+ years of experience in cutting hair.',
+                            image: 'assets/barber.jpg',
+                            onPressedButton1: () {
+                              // Implement the action for Button 1 here.
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const ProfilePage(),
+                                ),
+                              );
+                            },
+                            isOnline:
+                                false, // Set whether the service provider is online or offline.
+                          ),
+                        ],
+                      )),
+                  Visibility(
+                    visible:
+                        isSearching, // Content is visible when typing searching
+                    child: Positioned(
+                      child: Container(
+                        color: Colors.lightBlueAccent,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.05),
+                            Text(
+                              '${searchchoice}s',
+                              style: responsiveTextStyle(
+                                  context, 20, null, FontWeight.bold),
+                            ),
+                            SizedBox(
+                                height: MediaQuery.of(context).size.height *
+                                    0.0125),
+                            ServiceProviderCard(
+                              saved: false,
+                              name: 'John Doe',
+                              bio:
+                                  'Experienced plumber with 5+ years of experience in fixing pipes.',
+                              image: 'assets/plumber.jpg',
+                              onPressedButton1: () {
+                                // Implement the action for Button 1 here.
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        const ProfilePage(),
+                                  ),
+                                );
+                              },
+                              onPressedButton2: () {
+                                // Implement the action for Button 2 here.
+                                FocusScope.of(context).unfocus();
+                                setState(() {
+                                  isSearching = false;
+                                  // When suffix icon is tapped, set isTyping to false
+                                  isTyping = false;
+                                  // You can also clear the text field if needed
+                                  _controller.clear();
+                                  // Update the filtered services here as well
+                                  filteredServices = [];
+                                });
+                              },
+                              isOnline:
+                                  true, // Set whether the service provider is online or offline.
+                            ),
+                            SizedBox(
+                                height: MediaQuery.of(context).size.height *
+                                    0.0125),
+                            ServiceProviderCard(
+                              saved: false,
+                              name: 'Senior Centy',
+                              bio:
+                                  'Experienced barber with 5+ years of experience in cutting hair.',
+                              image: 'assets/barber.jpg',
+                              onPressedButton1: () {
+                                // Implement the action for Button 1 here.
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        const ProfilePage(),
+                                  ),
+                                );
+                              },
+                              onPressedButton2: () {
+                                // Implement the action for Button 2 here.
+                                FocusScope.of(context).unfocus();
+                                setState(() {
+                                  isSearching = false;
+                                  // When suffix icon is tapped, set isTyping to false
+                                  isTyping = false;
+                                  // You can also clear the text field if needed
+                                  _controller.clear();
+                                  // Update the filtered services here as well
+                                  filteredServices = [];
+                                });
+                              },
+                              isOnline:
+                                  false, // Set whether the service provider is online or offline.
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                            height:
-                                MediaQuery.of(context).size.height * 0.0125),
-                        ServiceProviderCard(
-                          name: 'John Doe',
-                          bio:
-                              'Experienced plumber with 5+ years of experience in fixing pipes.',
-                          image: 'assets/plumber.jpg',
-                          onPressedButton1: () {
-                            // Implement the action for Button 1 here.
-                          },
-                          onPressedButton2: () {
-                            // Implement the action for Button 2 here.
-                          },
-                          isOnline:
-                              true, // Set whether the service provider is online or offline.
-                        ),
-                        SizedBox(
-                            height:
-                                MediaQuery.of(context).size.height * 0.0125),
-                        ServiceProviderCard(
-                          name: 'Senior Centy',
-                          bio:
-                              'Experienced barber with 5+ years of experience in cutting hair.',
-                          image: 'assets/barber.jpg',
-                          onPressedButton1: () {
-                            // Implement the action for Button 1 here.
-                          },
-                          onPressedButton2: () {
-                            // Implement the action for Button 2 here.
-                          },
-                          isOnline:
-                              false, // Set whether the service provider is online or offline.
-                        ),
-                      ],
-                    )),
+                      ),
+                    ),
+                  ),
+                ]),
               ],
             ),
           ),
