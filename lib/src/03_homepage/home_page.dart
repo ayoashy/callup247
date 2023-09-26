@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../04_profile/profile_page.dart';
 import '../responsive_text_styles.dart';
 import 'service_provider_card.dart';
-import 'dart:math';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
