@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:async'; // Import the dart:async library
 
 import 'onboarding_choice_screen.dart';
-import 'responsive_text_styles.dart';
+
+import '../responsive_text_styles.dart';
 
 class OnboardingAnimationScreen extends StatefulWidget {
   const OnboardingAnimationScreen({super.key});
@@ -16,25 +18,78 @@ class _OnboardingAnimationScreenState extends State<OnboardingAnimationScreen>
     with TickerProviderStateMixin {
   int _currentPage = 0;
   final PageController _pageController = PageController(initialPage: 0);
+  late Timer _timer; // Declare a Timer object
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Start the timer to automatically move to the next page after 5 seconds
+    _timer = Timer(const Duration(seconds: 8), () {
+      _moveToNextPage();
+    });
+
+    _pageController.addListener(() {
+      // Cancel the timer if the user interacts with the page
+      _timer.cancel();
+    });
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the timer when the screen is disposed
+    _timer.cancel();
+    super.dispose();
+  }
+
+  void _moveToNextPage() {
+    if (_currentPage < 2) {
+      // Check if it's not the last page
+      _pageController.animateToPage(
+        _currentPage + 1,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
+    } else {
+      // Navigate to the next screen when on the last page
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => const OnboardingChoiceScreen(),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        children: <Widget>[
-          _buildOnboardingPage(
-              'assets/wide_services.svg', 'Comprehensive Service Selection', 0),
-          _buildOnboardingPage('assets/available.svg',
-              'Real-Time Service Provider Availability', 1),
-          _buildOnboardingPage('assets/payments.svg',
-              'Secure Payment and First-Time Seller Approval', 2),
-        ],
-        onPageChanged: (int page) {
-          setState(() {
-            _currentPage = page;
-          });
-        },
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+            colors: [
+              Color(0xFF039fdc),
+              Color(0xFF13CAF1),
+            ],
+          ),
+        ),
+        child: PageView(
+          controller: _pageController,
+          children: <Widget>[
+            _buildOnboardingPage('assets/wide_services.svg',
+                'Comprehensive Service Selection', 0),
+            _buildOnboardingPage('assets/available.svg',
+                'Real-Time Service Provider Availability', 1),
+            _buildOnboardingPage('assets/payments.svg',
+                'Secure Payment and First-Time Seller Approval', 2),
+          ],
+          onPageChanged: (int page) {
+            setState(() {
+              _currentPage = page;
+            });
+          },
+        ),
       ),
     );
   }
@@ -84,17 +139,7 @@ class _OnboardingAnimationScreenState extends State<OnboardingAnimationScreen>
             child: InkWell(
               splashColor: Colors.greenAccent,
               radius: 50.0,
-              onTap: () {
-                // Delay navigation by 300 milliseconds (adjust as needed)
-                Future.delayed(const Duration(milliseconds: 300), () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          const OnboardingChoiceScreen(),
-                    ),
-                  );
-                });
-              },
+              onTap: _moveToNextPage, // Use the method to navigate
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

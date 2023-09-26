@@ -1,5 +1,6 @@
-import 'package:callup247/responsive_text_styles.dart';
 import 'package:flutter/material.dart';
+
+import '../responsive_text_styles.dart';
 
 class GradientContainer extends StatelessWidget {
   final String title;
@@ -18,10 +19,10 @@ class GradientContainer extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(color: Colors.black, width: 2.0),
         borderRadius: BorderRadius.circular(10.0),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Colors.blue.shade300, Colors.blue.shade700],
+        gradient: const LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [Color(0xFF13CAF1), Color(0xFF039fdc)],
         ),
       ),
       padding: const EdgeInsets.all(16.0),
