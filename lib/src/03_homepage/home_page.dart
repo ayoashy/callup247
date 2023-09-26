@@ -550,7 +550,7 @@ class _HomePageState extends State<HomePage>
                     visible: isTyping, // Content is visible when typing
                     child: Container(
                       color: Colors.white,
-                      height: MediaQuery.of(context).size.height * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.6,
                       child: ListView.builder(
                         itemCount: filteredServices.length,
                         itemBuilder: (context, index) {
