@@ -83,6 +83,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               const SizedBox(
                                 width: 10,
                               ),
+
+                              // service provider pfp
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(
                                     16.0), // Adjust the radius as needed
@@ -96,6 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       .cover, // You can adjust the BoxFit as needed
                                 ),
                               ),
+                              // end of service provider pfp
                             ],
                           )
                         ],
@@ -109,6 +112,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.01),
+
+                      // service provider media territory
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -123,6 +128,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                       ),
+                      // end of service provider media territory
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.08),
                       Text(
@@ -132,6 +138,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.01),
+
+                      // service provider social links
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -172,6 +180,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           )
                         ],
                       ),
+                      // end of service provider social links
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.08),
                       Text(
@@ -181,6 +190,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.01),
+
+                      // service provider details
                       Row(
                         children: [
                           Text('Name:', // Label
@@ -259,6 +270,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ],
                       ),
+                      // end of service provider details
                     ],
                   ),
                 ),

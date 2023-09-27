@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage>
   bool isTyping = false; // Initially, the user is not typing
   bool isSearching = false; // Initially the user is not searching
   String searchchoice = '';
+  // services list
   List<String> servicesList = [
     'Accountant',
     'Accounts Clerk',
@@ -385,7 +386,8 @@ class _HomePageState extends State<HomePage>
     'Wool Classer',
     'Xylophonist',
     'Zoologist',
-  ]; // Your list of services
+  ];
+  // end of list of services
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -424,11 +426,13 @@ class _HomePageState extends State<HomePage>
                         children: [
                           Row(
                             children: [
+                              // customer pfp
                               const CircleAvatar(
                                 backgroundImage:
                                     AssetImage('assets/guest_dp.png'),
                                 radius: 30,
                               ),
+                              // end of customer pfp
                               PopupMenuButton(
                                 itemBuilder: (BuildContext context) {
                                   return [
@@ -479,11 +483,13 @@ class _HomePageState extends State<HomePage>
                               ),
                             ],
                           ),
+                          // customer name
                           Text(
                             'guestuser',
                             style: responsiveTextStyle(
                                 context, 16, Colors.white, FontWeight.bold),
                           ),
+                          // end of customer name
                         ],
                       ),
                     ],
@@ -599,6 +605,7 @@ class _HomePageState extends State<HomePage>
                             SizedBox(
                                 height: MediaQuery.of(context).size.height *
                                     0.0125),
+                            // saved searches
                             ServiceProviderCard(
                               saved: true,
                               name: 'John Doe',
@@ -639,6 +646,7 @@ class _HomePageState extends State<HomePage>
                               isOnline:
                                   false, // Set whether the service provider is online or offline.
                             ),
+                            // end of saved search
                           ],
                         )),
                     Visibility(
